@@ -1,0 +1,62 @@
+{
+    "name": "react-router-min",
+    "version": "1.0.0",
+    "description": "Only 5k. A lightweight react router component and hooks for ReactJS. Support dyamic routes, multiple routes, base path, presetQuery. useRouter and Link component Provided.",
+    "main": "./lib/index.esm.js",
+    "types": "./index.d.ts",
+    "type": "module",
+    "author": "billy LSQ <billypc@163.com>",
+    "scripts": {
+        "demo": "node demo",
+        "demo:esm": "node demo esm"
+    },
+    "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "import": "./lib/index.esm.js",
+            "require": "./lib/index.cjs.js",
+            "default": "./lib/index.umd.js"
+        }
+    },
+    "files": [
+        "lib",
+        "index.d.ts",
+        "README.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/billypc025/react-router-min.git"
+    },
+    "homepage": "https://github.com/billypc025/react-router-min",
+    "keywords": [
+        "react",
+        "router",
+        "useRouter",
+        "dynamic",
+        "spa",
+        "query",
+        "pathname",
+        "location",
+        "pushState",
+        "replaceState",
+        "history",
+        "basePath",
+        "presetQuery"
+    ],
+    "license": "MIT",
+    "devDependencies": {
+        "babel-loader": "^8.2.3",
+        "babel-preset-react-app": "^10.1.0",
+        "css-loader": "^6.5.1",
+        "html-webpack-plugin": "^5.6.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.99.7",
+        "webpack-dev-server": "^5.2.1"
+    },
+    "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+    }
+}

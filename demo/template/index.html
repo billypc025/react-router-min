@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>react-router-min demos</title>
+        <link
+            rel="stylesheet"
+            href="/css/style.css"
+        />
+        <script src="/js/react.development.js"></script>
+        <script src="/js/react-dom.development.js"></script>
+        {header}
+    </head>
+    <body>
+        <div class="demo">
+            <div id="demoNav">
+                <h2>Tutorials</h2>
+                {demos}
+            </div>
+            <div class="demo-file">
+                <div class="demo-file-header">
+                    <div id="files">{files}</div>
+                    <div id="hiddenFiles">{hiddenFiles}</div>
+                </div>
+                <div id="code"><pre>{code}</pre></div>
+            </div>
+        </div>
+        <div class="page">
+            <div id="root"></div>
+            <div id="console"></div>
+        </div>
+    </body>
+</html>
+<script>
+    const demoId = { demoId }
+    const consoleDiv = document.getElementById('console')
+    const realConsole = window.console
+    let lastLog = '',
+        lastTime = 0,
+        lastLogNum = 1,
+        lastLogEl
+    window.console = {
+        ...realConsole,
+        log(label, ...arg) {
+            if (typeof label == 'string' && /^\[[\w.]+\]$/.test(label)) {
+                label = `<label>${label.slice(1, -1)}</label> `
+            } else {
+                arg.unshift(label)
+                label = ''
+            }
+            addLog(`${label}${arg.map(v => format(v)).join('<i>, </i>')}`)
+            showLog()
+        },
+        table(title, list) {
+            if (!Array.isArray(list) || list.some(v => !v || typeof v !== 'object')) {
+                console.log(title, list)
+            } else {
+                if (list.length > 0) {
+                    addLog(`<label>${title}</label>`)
+                    addTable(list)
+                    showLog()
+                }
+            }
+        },
+        fetch(api, data = {}) {
+            addLog(`POST: <span class="fetch">/api/${api}</span><i>,</i> ${format(data)}`)
+            showLog()
+        },
+    }
+
+    const demoNav = document.getElementById('demoNav')
+    demoNav.addEventListener('click', e => {
+        if (e.target.tagName != 'BTN') return
+        let index = Array.prototype.findIndex.call(demoNav.querySelectorAll('btn'), v => v == e.target)
+        if (index != { demoIndex })
+            _fetch('set-example', { index }).then(({ path }) =>
+                path ? (window.location.pathname = path) : window.location.reload()
+            )
+    })
+
+    const iframe = document.querySelector('iframe')
+    const files = document.getElementById('files')
+    const codeDiv = document.getElementById('code')
+    async function onClickCodeHandler(e) {
+        const popFiles = document.getElementById('popFiles')
+        if (popFiles) popFiles.style.display = 'none'
+        const codeSrc = e.target.getAttribute('code-src')
+        if (!codeSrc) return
+        await setCode(codeSrc)
+    }
+    files.addEventListener('click', onClickCodeHandler)
+    codeDiv.addEventListener('click', onClickCodeHandler)
+    async function setCode(fileName) {
+        let code = await _get(fileName)
+        Array.prototype.forEach.call(
+            files.children,
+            v => (v.className = v.getAttribute('code-src') == fileName ? 'actived' : '')
+        )
+        codeDiv.children[0].innerHTML = code
+    }
+    const hiddenFiles = document.getElementById('hiddenFiles')
+    if (hiddenFiles.children.length > 0) {
+        const popFiles = document.getElementById('popFiles')
+        hiddenFiles.addEventListener('click', e => {
+            const codeSrc = e.target.getAttribute('code-src')
+            if (!codeSrc) {
+                popFiles.style.display = 'block'
+            } else {
+                popFiles.removeChild(e.target)
+                const btn = document.createElement('btn')
+                btn.innerText = codeSrc.substring(codeSrc.lastIndexOf('/') + 1)
+                btn.setAttribute('code-src', codeSrc)
+                btn.setAttribute('code-type', 'template')
+                files.appendChild(btn)
+                setCode(codeSrc)
+                popFiles.style.display = 'none'
+                const num = hiddenFiles.querySelector('div').querySelector('span').innerText - 0
+                if (num == 1) {
+                    hiddenFiles.innerHTML = ''
+                    hiddenFiles.style.display = 'none'
+                } else {
+                    hiddenFiles.querySelector('div').querySelector('span').innerText = `${num - 1}`
+                }
+                files.scrollTo({ left: files.clientWidth, behavior: 'smooth' })
+            }
+        })
+    } else {
+        hiddenFiles.style.display = 'none'
+    }
+    async function _get(url) {
+        let res = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'text/html' },
+        })
+        return await res.text()
+    }
+
+    async function _fetch(api, data) {
+        console.fetch(api, data)
+        let res = await fetch(`/api/${api}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+        return await res.json()
+    }
+
+    function addLog(str) {
+        if (lastLog == str && performance.now() - lastTime < 500) {
+            lastTime = performance.now()
+            lastLogNum++
+            lastLogEl.innerHTML = `${lastLogEl.innerHTML.replace(
+                / <span class\="num">\(\d+\)<\/span>$/g,
+                ''
+            )} <span class="num">(${lastLogNum})</span>`
+            return
+        }
+        lastLog = str
+        lastLogNum = 1
+        lastTime = performance.now()
+        const p = document.createElement('p')
+        p.innerHTML = str
+        consoleDiv.appendChild(p)
+        lastLogEl = p
+    }
+
+    function addTable(list) {
+        const keys = Object.keys(list[0])
+        const table = document.createElement('table')
+        table.innerHTML = `<thead><tr>${keys.map(k => `<th>${k}</th>`).join('')}</tr></thead><tbody>${list
+            .map(obj => `<tr>${keys.map(k => `<td>${format(obj[k])}</td>`).join('')}</tr>`)
+            .join('')}</tbody>`
+        consoleDiv.appendChild(table)
+    }
+
+    function format(val) {
+        if (val === null || val === undefined) return `<span class="null">${val}</span>`
+        if (typeof val == 'string') return `<span class="string">"${val}"</span>`
+        if (typeof val == 'number') return `<span class="number">${val}</span>`
+        if (typeof val == 'boolean') return `<span class="boolean">${val}</span>`
+        if (typeof val == 'function') return `<span class="function">${val.name || 'f'}()</span>`
+        if (Array.isArray(val)) {
+            return `[ ${val.map(v => format(v)).join('<i>, </i>')} ]`
+        } else if (typeof val == 'object') {
+            return `{ ${Object.keys(val)
+                .map(k => `<span class="key">${k}</span><i>: </i>${format(val[k])}`)
+                .join('<i>, </i>')} }`
+        }
+        return `${val}`
+    }
+    function showLog() {
+        consoleDiv.className = 'console'
+        consoleDiv.scrollTo(0, consoleDiv.clientHeight)
+    }
+</script>
+<script
+    defer="defer"
+    src="/js/{demoId}/bundle.js"
+></script>

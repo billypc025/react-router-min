@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                display: flex;
+                background-color: #3f3f3f;
+            }
+            #demoNav {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                background-color: #2a2a2a;
+                display: flex;
+                flex-direction: column;
+                width: 330px;
+                font-size: 16px;
+                font-family: Menlo, Monaco, monospace, 'Courier New';
+                h2 {
+                    color: #6e65b1;
+                    padding: 20px 20px;
+                }
+                a.btn {
+                    text-decoration: none;
+                    color: #bbb;
+                    margin-block-end: 4px;
+                    padding: 10px 20px;
+                    line-height: 24px;
+
+                    &:hover {
+                        color: white;
+                    }
+
+                    &.actived {
+                        color: white;
+                        background-color: #2168db59;
+                        border: 1px solid #2168db;
+                    }
+                }
+            }
+            .container {
+                display: flex;
+                justify-content: center;
+                .main {
+                    font-size: 16px;
+                    padding: 0 20px 0 350px;
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #3f3f3f;
+                    flex: 1;
+                    order: 1;
+
+                    h1,
+                    h2,
+                    h3,
+                    h4,
+                    h5,
+                    h6 {
+                        color: white;
+                        margin: 10px 0;
+                        padding: 10px 0;
+                    }
+                    h2,
+                    h3,
+                    h4,
+                    h5,
+                    h6 {
+                        scroll-margin-top: 90px;
+                    }
+                    h1 {
+                        border-bottom: 2px solid #ffffff;
+                        margin: 30px 0;
+                        padding: 20px 0;
+                        color: #ffffff;
+                        position: sticky;
+                        top: 0;
+                        background-color: #3f3f3f;
+                    }
+                    h2 {
+                        border-bottom: 1px solid #5d5d5d;
+                        margin: 20px 0 10px;
+                        padding: 20px 0 10px;
+                    }
+                    h3 {
+                        margin-bottom: 0;
+                    }
+                    p {
+                        font-size: 18px;
+                        color: #ddd;
+                        margin: 0;
+                        padding: 10px 0;
+                    }
+                    pre {
+                        white-space: break-spaces;
+                        background-color: #202020;
+                        padding: 20px;
+                        line-height: 24px;
+                        margin: 10px 0;
+                        border-radius: 5px;
+                    }
+                    code {
+                        &.html {
+                            color: #abcafc;
+                        }
+                        &.shell {
+                            color: #e0e0e0;
+                        }
+                        &.javascript {
+                            color: #55a94c;
+                        }
+                        &.line {
+                            background-color: rgb(81 81 81);
+                            color: #ffc500;
+                            padding: 2px 5px;
+                            border-radius: 4px;
+                        }
+                    }
+                    .keyword {
+                        color: #3d9fff;
+                    }
+                    .object {
+                        color: #3d9fff;
+                    }
+                    .string {
+                        color: #ffb77b;
+                    }
+                    .name {
+                        color: #7ae3ff;
+                    }
+                    .function {
+                        color: #fff8b0;
+                    }
+                    .attr {
+                        color: #7ae3ff;
+                    }
+                    .regex {
+                        color: #ff7a52;
+                    }
+                    .import {
+                        color: #e886ff;
+                    }
+                    .bracket {
+                        color: #ecff00;
+                    }
+                    .brace {
+                        color: #ffc410;
+                    }
+                    .symbol {
+                        color: white;
+                    }
+                    .jsx {
+                        color: #3d9fff;
+                    }
+                    .jsx-attr {
+                        color: #7ae3ff;
+                    }
+                    .jsx-tag {
+                        color: #acacac;
+                    }
+                    .jsx-text {
+                        color: white;
+                    }
+                }
+                .aside {
+                    display: block;
+                    position: relative;
+                    order: 2;
+                    width: 240px;
+                    background-color: #3f3f3f;
+
+                    .toc {
+                        color: white;
+                        padding-top: 30px;
+                        border-left: 1px solid #2e2e32;
+                        padding-left: 16px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        width: 220px;
+                        position: fixed;
+                        top: 0;
+                        bottom: 0;
+
+                        .marker {
+                            position: absolute;
+                            top: 32px;
+                            left: -1px;
+                            margin-top: 9px;
+                            width: 2px;
+                            border-radius: 2px;
+                            height: 18px;
+                            background-color: #ffffff;
+                            transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), background-color 0.5s, opacity 0.25s;
+                        }
+                        .title {
+                            line-height: 32px;
+                            font-size: 16px;
+                            font-weight: 600;
+                        }
+
+                        a {
+                            display: block;
+                            line-height: 32px;
+                            font-size: 14px;
+                            font-weight: 400;
+                            color: #98989f;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            transition: color 0.5s;
+                            cursor: pointer;
+                            text-decoration: none;
+                            &:hover {
+                                color: #d7d7d7;
+                            }
+                            &.actived {
+                                color: white;
+                            }
+                        }
+
+                        ul {
+                            list-style: none;
+                            padding-right: 14px;
+                            padding-left: 14px;
+                        }
+                        li {
+                            overflow-wrap: break-word;
+                        }
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="demoNav">
+            <h2>Tutorials</h2>
+            {demos}
+        </div>
+        <div class="container">
+            <div class="aside">
+                <div class="toc">
+                    <div class="marker"></div>
+                    {toc}
+                </div>
+            </div>
+            <div class="main">{content}</div>
+        </div>
+    </body>
+</html>
+<script>
+    let currentHighlightLink
+    function __throttle(func, delay) {
+        let executorTime = 0
+        return (...arg) => {
+            if (Date.now() - executorTime < delay) {
+                return
+            }
+            executorTime = Date.now()
+            func(...arg)
+        }
+    }
+    const main = document.querySelector('.main')
+    const marker = document.querySelector('.marker')
+    const onScroll = __throttle(e => {
+        highlightLink()
+    }, 300)
+    document.querySelector('h1').addEventListener('click', e => {
+        document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' })
+    })
+    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scrollend', onScroll)
+
+    function highlightLink() {
+        const hList = main.querySelectorAll('h2,h3,h4,h5,h6')
+        let before
+        let el = Array.prototype.find.call(hList, v => {
+            const b = v.offsetTop - 90 > window.pageYOffset
+            if (!b) before = v
+            return b
+        })
+        el = before || el
+        if (el && el.id) {
+            const a = document.getElementById(`a_${el.id}`)
+            currentHighlightLink && (currentHighlightLink.className = '')
+            a.className = 'actived'
+            currentHighlightLink = a
+            marker.style.top = `${a.offsetTop}px`
+        }
+    }
+    highlightLink()
+</script>

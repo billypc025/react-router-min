@@ -1,0 +1,30 @@
+<style>
+    body{background-color:#202020;color:#55a94c;font-size:16px;line-height:24px;margin:0;padding-top:20px}
+    pre{position:absolute;overflow:scroll;width:calc(100% - 14px);margin:0 0 0 10px;height:100%;white-space:break-spaces}
+    .keyword{color:#3d9fff}
+    .object{color:#3d9fff}
+    .string{color:#ffb77b}
+    .name{color:#7ae3ff}
+    .function{color:#fff8b0}
+    .attr{color:#7ae3ff}
+    .regex{color:#ff7a52}
+    .import{color:#e886ff}
+    .bracket{color:#ecff00}
+    .brace{color:#ffc410}
+    .symbol{color:white}
+    .jsx{color:#3d9fff}
+    .jsx-attr{color:#7ae3ff}
+    .jsx-tag{color:#acacac}
+    .jsx-text{color:white}
+    li{min-height:24px;padding-left:10px;margin-left:10px;}
+    li:before{content:counter(custom-counter);counter-increment:custom-counter;color:#888;text-align:right;width:40px;display:inline-block;position:absolute;left:-4px}
+    ol{list-style-type:none;counter-reset: custom-counter}
+    .hl{background:linear-gradient(284deg,#00000000,#7f7f7f30);}
+    .hl-top{border-top: 1px solid #3f3f3f}
+    .hl-bottom{border-bottom: 1px solid #3f3f3f}
+    .hl-block{background:#797a7a54;padding:2px 4px;color:#cdff67}
+    btn{color:unset;text-decoration:none;position:relative;cursor:pointer}
+    btn:hover{background-color:#6f4828;}
+    btn::after{content:'';position: absolute;left:0;bottom:-3px;width:100%;height:1px;background-color:#ffb77bfc}
+</style>
+<pre>{code}</pre>
