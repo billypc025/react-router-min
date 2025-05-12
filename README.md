@@ -1,4 +1,4 @@
-# react-router-simple
+# react-router-min
 
 Only 5k. A lightweight react router component and hooks for ReactJS.
 
